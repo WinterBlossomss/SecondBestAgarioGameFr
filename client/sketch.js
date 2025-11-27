@@ -1,13 +1,12 @@
-const canvas = document.getElementById("canvas");
 let blob;
-
 let blobs = [];
 let zoom = 1;
 
-let width = canvas.width;
-let height = canvas.height;
+
 function setup() {
     createCanvas(window.innerWidth,window.innerHeight);
+    pixelDensity(1);
+    noSmooth();
     blob = new Blob(0, 0, 64);
     for (let i = 0; i < 200; i++) {
         let x = random(-width, width);
@@ -15,36 +14,43 @@ function setup() {
         blobs[i] = new Blob(x, y, 16);
     }
 }
-function drawGridLines() {
 
-    // canvas.style.border = "1px solid red"
-    ctx.beginPath();
-    ctx.lineWidth = 1;
-    ctx.strokeStyle = "gray";
+function drawScreenGrid(spacing, camX, camY, zoom) {
+    background(255);      // white background
+    stroke(220);          // light gray lines
+    strokeWeight(2);
 
-    let offsetX = Math.floor(canvas.width / 50);
-    let offsetY = Math.floor(canvas.height / 25);
+    const step = spacing;
 
-    for (let x = offsetX; x < canvas.width; x += offsetX) {
-        ctx.moveTo(x, 0);
-        ctx.lineTo(x,canvas.height);
+    const camOffsetX = -camX * zoom + width  / 2;
+    const camOffsetY = -camY * zoom + height / 2;
+
+    let offsetX = ((camOffsetX % step) + step) % step;
+    let offsetY = ((camOffsetY % step) + step) % step;
+
+    offsetX = Math.round(offsetX);
+    offsetY = Math.round(offsetY);
+
+    for (let x = offsetX; x < width; x += step) {
+        const ix = Math.round(x);
+        line(ix, 0, ix, height);
     }
 
-    for (let y = offsetY; y <canvas.height; y += offsetY) {
-        ctx.moveTo(0, y);
-        ctx.lineTo(canvas.width, y);
+    for (let y = offsetY; y < height; y += step) {
+        const iy = Math.round(y);
+        line(0, iy, width, iy);
     }
-
-    ctx.stroke();
-
-    return canvas;
 }
+
+
 function draw() {
-    background(0);
-    drawGridLines();
-    translate(width / 2, height / 2);
-    let newzoom = 64 / blob.r;
+    const newzoom = 300 / blob.r;
     zoom = lerp(zoom, newzoom, 0.1);
+
+    drawScreenGrid(60, blob.pos.x, blob.pos.y, zoom);
+
+    push();
+    translate(width / 2, height / 2);
     scale(zoom);
     translate(-blob.pos.x, -blob.pos.y);
 
@@ -57,4 +63,8 @@ function draw() {
 
     blob.show();
     blob.update();
+    pop();
 }
+
+
+

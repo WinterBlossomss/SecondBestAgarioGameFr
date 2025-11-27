@@ -17,7 +17,7 @@ document.addEventListener("DOMContentLoaded", function () {
    canvas.width= gameCanvas.width = document.body.clientWidth;
     canvas.height= gameCanvas.height = document.body.clientHeight;
     drawGridLines();
-    socket = io.connect("http://localhost:3000/");
+    //socket = io.connect("http://localhost:3000/");
 
     let blob = new Blob(random(width), random(height), Math.floor(Math.random() * 24) + 8);
     let data = {
@@ -25,11 +25,11 @@ document.addEventListener("DOMContentLoaded", function () {
         y: blob.pos.y,
         r: blob.r
     };
-    socket.emit('start', data);
-
-    socket.on('heartbeat', function(data) {
-        blobs = data;
-    });
+    // socket.emit('start', data);
+    //
+    // socket.on('heartbeat', function(data) {
+    //     blobs = data;
+    // });
 });
 
 let x = 400, y = 300;
@@ -46,11 +46,11 @@ function loop() {
 
     requestAnimationFrame(loop);
 }
-gameCanvas.addEventListener("mousemove", e => {
-    const rect = gameCanvas.getBoundingClientRect();
-    x = e.clientX - rect.left;
-    y = e.clientY - rect.top;
-});
+// gameCanvas.addEventListener("mousemove", e => {
+//     const rect = gameCanvas.getBoundingClientRect();
+//     x = e.clientX - rect.left;
+//     y = e.clientY - rect.top;
+// });
 //loop();
 
 function drawGridLines() {

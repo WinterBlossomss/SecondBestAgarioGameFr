@@ -24,7 +24,7 @@ function Blob(x, y, r) {
     };
 
     this.show = function() {
-        fill(255);
+        fill(0);
         ellipse(this.pos.x, this.pos.y, this.r * 2, this.r * 2);
     };
 }
