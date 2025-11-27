@@ -33,6 +33,7 @@ gameCanvas.addEventListener("mousemove", e => {
     y = e.clientY - rect.top;
 });
 loop();
+
 function drawGridLines()
 {
 
@@ -58,3 +59,19 @@ function drawGridLines()
 
     return canvas;
 }
+
+
+socket = io();
+
+socket.on("connect", () => {
+    console.log(socket.id);
+})
+
+
+
+
+
+
+
+
+
