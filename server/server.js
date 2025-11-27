@@ -5,7 +5,11 @@ const app     = express();
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const httpServer = createServer(app);
-app.use(express.static(__dirname + '/../client'));
+let path = require("path");
+const url = require("url");
+
+app.use(express.static('client'));
+
 const io = new Server(httpServer, { /* options */ });
 
 //Test console.log
@@ -16,7 +20,11 @@ io.on('connection', function (socket) {
 
 });
 
-const serverPort = process.env.PORT;
+const serverPort = process.env.PORT || 5000;
 httpServer.listen(serverPort, function() {
     console.log("Server is listening on port " + serverPort);
+});
+
+app.get('/', (req, res) => {
+    res.send('Welcome to my static website!');
 });

@@ -84,8 +84,7 @@ function animloop(){
 }
 
 function gameLoop() {
-    game.handleLogic();
-    game.handleGraphics(canvas);
+
 }
 
 window.addEventListener('resize', function() {
