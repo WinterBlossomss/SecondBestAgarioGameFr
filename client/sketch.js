@@ -2,9 +2,10 @@ let blob;
 let blobs = [];
 let zoom = 1;
 
+canvas = document.getElementById("canvas");
 
 function setup() {
-    createCanvas(window.innerWidth,window.innerHeight);
+    createCanvas(window.innerWidth,window.innerHeight,canvas);
     pixelDensity(1);
     noSmooth();
     blob = new Blob(0, 0, 64);
@@ -16,8 +17,8 @@ function setup() {
 }
 
 function drawScreenGrid(spacing, camX, camY, zoom) {
-    background(255);      // white background
-    stroke(220);          // light gray lines
+    background(255);
+    stroke(220);
     strokeWeight(2);
 
     const step = spacing;
