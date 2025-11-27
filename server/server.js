@@ -1,21 +1,20 @@
-import { v4 as uuidv4 } from 'uuid';
-
 const express = require('express');
+const app     = express();
 const { createServer } = require("http");
 const { Server } = require("socket.io");
-
-const app = express();
-app.use(express.static('public'));  // serve files from public/ directory
+const config  = require('./config.json');
 const httpServer = createServer(app);
+
+app.use(express.static(__dirname + '/../client'));
 const io = new Server(httpServer, { /* options */ });
-const SAT = require('sat');
-const uuid = require("uuid");
-
-io.engine.generateId = (req) => {
-    return uuidv4(); // must be unique across all Socket.IO servers
-}
 
 
-httpServer.listen(3000);
+io.on('connection', function (socket) {
+    console.log("Somebody connected!");
 
-console.log(`Server started`);
+});
+
+const serverPort = config.port;
+httpServer.listen(serverPort, function() {
+    console.log("Server is listening on port " + serverPort);
+});
