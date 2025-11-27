@@ -5,8 +5,6 @@ const app     = express();
 const { createServer } = require("http");
 const { Server } = require("socket.io");
 const httpServer = createServer(app);
-let path = require("path");
-const url = require("url");
 
 app.use(express.static('client'));
 
@@ -45,7 +43,7 @@ io.on('connection', function (socket) {
         //console.log(socket.id + " " + data.x + " " + data.y + " " + data.r);
         let blob;
         for (let i = 0; i < blobs.length; i++) {
-            if (socket.id === blobs[i].id) {
+            if (socket.id == blobs[i].id) {
                 blob = blobs[i];
             }
         }

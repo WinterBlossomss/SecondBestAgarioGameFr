@@ -1,3 +1,4 @@
+
 function Blob(x, y, r) {
     this.pos = createVector(x, y);
     this.r = r;
@@ -5,9 +6,7 @@ function Blob(x, y, r) {
 
     this.update = function() {
         let newvel = createVector(mouseX - width / 2, mouseY - height / 2);
-        newvel.div(50);
-        //newvel.setMag(3);
-        newvel.limit(3);
+        newvel.setMag(3);
         this.vel.lerp(newvel, 0.2);
         this.pos.add(this.vel);
     };
@@ -22,11 +21,6 @@ function Blob(x, y, r) {
         } else {
             return false;
         }
-    };
-
-    this.constrain = function() {
-        blob.pos.x = constrain(blob.pos.x, -width / 4, width / 4);
-        blob.pos.y = constrain(blob.pos.y, -height / 4, height / 4);
     };
 
     this.show = function() {

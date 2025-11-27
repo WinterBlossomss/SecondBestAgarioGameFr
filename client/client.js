@@ -1,4 +1,4 @@
-const canvas = document.getElementById("canvas");
+
 const ctx = canvas.getContext("2d");
 const gameCanvas = document.getElementById("gameCanvas");
 const ctxGame = gameCanvas.getContext("2d");
