@@ -1,20 +1,41 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
-
+const gameCanvas = document.getElementById("gameCanvas");
+const ctxGame = gameCanvas.getContext("2d");
 
 document.oncontextmenu = function () {
     return false;
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+   canvas.width= gameCanvas.width = document.body.clientWidth;
+    canvas.height= gameCanvas.height = document.body.clientHeight;
     drawGridLines();
-
 });
 
+let x = 400, y = 300;
+
+function loop() {
+
+    ctxGame.clearRect(0, 0, gameCanvas.width, gameCanvas.height);
+
+
+    ctxGame.beginPath();
+    ctxGame.arc(x, y, 20, 0, Math.PI * 2);
+    ctxGame.fillStyle = "blue";
+    ctxGame.fill();
+
+    requestAnimationFrame(loop);
+}
+gameCanvas.addEventListener("mousemove", e => {
+    const rect = gameCanvas.getBoundingClientRect();
+    x = e.clientX - rect.left;
+    y = e.clientY - rect.top;
+});
+loop();
 function drawGridLines()
 {
-    canvas.width = document.body.clientWidth;
-    canvas.height = document.body.clientHeight;
+
     // canvas.style.border = "1px solid red"
     ctx.beginPath();
     ctx.lineWidth = 1;
@@ -37,33 +58,3 @@ function drawGridLines()
 
     return canvas;
 }
-function followMouseMovement()
-{
-
-}
-let ball = {
-    x: 50,
-    y: 50,
-    radius: 20,
-    color: "black"
-};
-
-function drawBall() {
-    ctx.fillStyle = ball.color;
-    ctx.beginPath();
-    ctx.arc(ball.x, ball.y, ball.radius, 0, Math.PI * 2);
-    ctx.fill();
-}
-
-function moveBall(e) {
-    const rect = canvas.getBoundingClientRect();
-
-    ball.x = e.clientX - rect.left;
-    ball.y = e.clientY - rect.top;
-
-    drawBall();
-}
-
-window.addEventListener("mousemove", moveBall);
-
-drawBall();
