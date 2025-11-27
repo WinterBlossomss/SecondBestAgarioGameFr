@@ -2,7 +2,6 @@ let blob;
 let blobs = [];
 let zoom = 1;
 
-
 function setup() {
     createCanvas(window.innerWidth,window.innerHeight);
     pixelDensity(1);
@@ -15,15 +14,15 @@ function setup() {
     }
 }
 
-function drawScreenGrid(spacing, camX, camY, zoom) {
+function drawScreenGrid(spacing, camX, camY) {
     background(255);      // white background
     stroke(220);          // light gray lines
     strokeWeight(2);
 
     const step = spacing;
 
-    const camOffsetX = -camX * zoom + width  / 2;
-    const camOffsetY = -camY * zoom + height / 2;
+    const camOffsetX = -camX + width  / 2;
+    const camOffsetY = -camY  + height / 2;
 
     let offsetX = ((camOffsetX % step) + step) % step;
     let offsetY = ((camOffsetY % step) + step) % step;
@@ -44,10 +43,11 @@ function drawScreenGrid(spacing, camX, camY, zoom) {
 
 
 function draw() {
-    const newzoom = 300 / blob.r;
+
+    const newzoom = 150 / blob.r;
     zoom = lerp(zoom, newzoom, 0.1);
 
-    drawScreenGrid(60, blob.pos.x, blob.pos.y, zoom);
+    drawScreenGrid(60, blob.pos.x, blob.pos.y);
 
     push();
     translate(width / 2, height / 2);
